@@ -5,6 +5,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Devices
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,8 +19,8 @@ import com.echosystem.localshare.ui.screens.*
 @Composable
 fun LocalShareNavHost() {
     val navController = rememberNavController()
-    val items = listOf("home", "devices", "files", "settings")
-    val icons = listOf(Icons.Default.Home, Icons.Default.Devices, Icons.Default.Folder, Icons.Default.Settings)
+    val items = listOf("home", "devices", "files", "settings", "about")
+    val icons = listOf(Icons.Default.Home, Icons.Default.Devices, Icons.Default.Folder, Icons.Default.Settings, Icons.Default.Info)
 
     Scaffold(
         bottomBar = {
@@ -41,6 +42,7 @@ fun LocalShareNavHost() {
             composable("devices") { DevicesScreen() }
             composable("files") { FilesScreen() }
             composable("settings") { SettingsScreen() }
+            composable("about") { AboutScreen() }
         }
     }
 }
