@@ -32,4 +32,12 @@ class PairingManager @Inject constructor(
     fun getSecret(key: String): String? {
         return sharedPreferences.getString(key, null)
     }
+
+    fun requiresPin(): Boolean {
+        return sharedPreferences.getString("pin", null) != null
+    }
+
+    fun verifyPin(pin: String): Boolean {
+        return sharedPreferences.getString("pin", null) == pin
+    }
 }

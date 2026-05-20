@@ -14,24 +14,24 @@ class WifiDirectDiscovery @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     private val manager = context.getSystemService(Context.WIFI_P2P_SERVICE) as WifiP2pManager
-    private val channel = manager.initialize(context, context.mainLooper, null)
+    private val p2pChannel = manager.initialize(context, context.mainLooper, null)
 
     fun discover(): Flow<DeviceCandidate> = callbackFlow {
         val serviceInfo = WifiP2pDnsSdServiceInfo.newInstance("LocalShare", "_localshare._tcp.", mapOf("port" to "8080"))
         
-        manager.addLocalService(channel, serviceInfo, null)
+        manager.addLocalService(p2pChannel, serviceInfo, null)
         
         val serviceResponseListener = WifiP2pManager.DnsSdServiceResponseListener { _, _, srcDevice ->
             trySend(DeviceCandidate(srcDevice.deviceAddress, 8080, "wifi_direct"))
         }
         
-        manager.setDnsSdResponseListeners(channel, serviceResponseListener, null)
-        manager.discoverServices(channel, null)
+        manager.setDnsSdResponseListeners(p2pChannel, serviceResponseListener, null)
+        manager.discoverServices(p2pChannel, null)
         
         awaitClose {
-            manager.removeGroup(channel, null)
-            manager.clearLocalServices(channel, null)
-            manager.clearServiceRequests(channel, null)
+            manager.removeGroup(p2pChannel, null)
+            manager.clearLocalServices(p2pChannel, null)
+            manager.clearServiceRequests(p2pChannel, null)
         }
     }
 }
