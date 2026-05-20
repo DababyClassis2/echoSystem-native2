@@ -20,7 +20,7 @@ class BootReceiver : BroadcastReceiver() {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED || intent.action == "android.intent.action.QUICKBOOT_POWERON") {
             scope.launch {
                 if (settingsRepository.autoStartOnBoot().first()) {
-                    // LocalShareForegroundService.start(context)
+                    LocalShareForegroundService.start(context)
                 }
             }
         }
