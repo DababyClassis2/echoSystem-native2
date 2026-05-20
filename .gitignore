@@ -2,3 +2,26 @@ package-lock.json
 package.json
 .idx/
 node_modules/
+
+# Android build outputs and logs
+build_output*.txt
+local_build_output*.txt
+*.log
+app/build/
+build/
+.gradle/
+local.properties
+capture/
+memory.bin
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+*.iws
+
+# Gradle
+.gradle/
+build/
+
+# Kotlin
+.kotlin/
