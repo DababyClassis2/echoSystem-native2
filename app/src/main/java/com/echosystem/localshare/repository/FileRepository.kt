@@ -57,6 +57,7 @@ class FileRepository @Inject constructor(@ApplicationContext context: Context) {
         val sharedFile = SharedFile(
             id = UUID.randomUUID().toString(),
             name = sanitizedName,
+            size = file.length(),
             absolutePath = file.absolutePath,
             mimeType = mimeType,
             fromDeviceId = fromDeviceId
@@ -92,6 +93,7 @@ class FileRepository @Inject constructor(@ApplicationContext context: Context) {
         val sharedFile = SharedFile(
             id = UUID.randomUUID().toString(),
             name = sanitizedName,
+            size = destFile.length(),
             absolutePath = destFile.absolutePath,
             mimeType = mimeType,
             fromDeviceId = fromDeviceId

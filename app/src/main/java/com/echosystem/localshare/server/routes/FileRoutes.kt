@@ -29,7 +29,7 @@ class FileRoutes @Inject constructor(
             }
             get("/{id}/download") {
                 val id = call.parameters["id"] ?: return@get call.respond(HttpStatusCode.BadRequest)
-                val file = fileRepository.getFile(id) ?: return@get call.respond(HttpStatusCode.NotFound)
+                val file = fileRepository.getFileAsJavaFile(id) ?: return@get call.respond(HttpStatusCode.NotFound)
                 call.response.header(HttpHeaders.ContentDisposition, ContentDisposition.Attachment.withParameter(ContentDisposition.Parameters.FileName, file.name).toString())
                 call.respondFile(file)
             }
@@ -39,7 +39,7 @@ class FileRoutes @Inject constructor(
                 multipart.forEachPart { part ->
                     if (part is PartData.FileItem) {
                         // Simplified saving, real implementation needs proper stream handling
-                        val file = fileRepository.saveFile(part.originalFileName ?: "unknown", part.streamProvider(), part.contentType?.toString() ?: "application/octet-stream", "unknown")
+                        val file = fileRepository.saveMultipartFile(part.originalFileName ?: "unknown", part.streamProvider(), part.contentType?.toString() ?: "application/octet-stream", "unknown")
                         savedFiles.add(file)
                         serverEventBus.emit(com.echosystem.localshare.model.ServerEvent.FileReceived(file))
                     }
